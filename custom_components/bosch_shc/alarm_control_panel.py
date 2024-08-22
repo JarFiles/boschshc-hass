@@ -6,7 +6,7 @@ from homeassistant.components.alarm_control_panel.const import (
 )
 from homeassistant.const import (
     STATE_ALARM_ARMED_AWAY,
-    STATE_ALARM_ARMED_CUSTOM_BYPASS,
+    STATE_ALARM_ARMED_NIGHT,
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_ARMING,
     STATE_ALARM_DISARMED,
@@ -131,7 +131,7 @@ class IntrusionSystemAlarmControlPanel(AlarmControlPanelEntity):
                 self._device.active_configuration_profile
                 == SHCIntrusionSystem.Profile.CUSTOM_PROTECTION
             ):
-                return STATE_ALARM_ARMED_CUSTOM_BYPASS
+                return STATE_ALARM_ARMED_NIGHT
         return None
 
     @property
@@ -140,7 +140,7 @@ class IntrusionSystemAlarmControlPanel(AlarmControlPanelEntity):
         return (
             AlarmControlPanelEntityFeature.ARM_AWAY
             + AlarmControlPanelEntityFeature.ARM_HOME
-            + AlarmControlPanelEntityFeature.ARM_CUSTOM_BYPASS
+            + AlarmControlPanelEntityFeature.ARM_NIGHT
         )
 
     @property
@@ -171,8 +171,8 @@ class IntrusionSystemAlarmControlPanel(AlarmControlPanelEntity):
         """Send arm home command."""
         self._device.arm_partial_protection()
 
-    def alarm_arm_custom_bypass(self, code=None):
-        """Send arm home command."""
+    def alarm_arm_night(self, code=None):
+        """Send arm night command."""
         self._device.arm_individual_protection()
 
     def alarm_mute(self):
